@@ -1,12 +1,12 @@
 <nav class="bg-blue-600 text-white shadow">
   <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
     <a href="#" class="text-xl font-semibold">
-      <strong>WEB2081 App</strong>
+      <strong>WEB2081 Angular</strong>
     </a>
 
     <div class="hidden md:flex items-center space-x-8">
       <a href="#" class="hover:text-gray-200">Trang chủ</a>
-      <a href="#" class="hover:text-gray-200">Danh sách</a>
+      <a href="../about.html" class="hover:text-gray-200">Danh sách</a>
       <a href="#" class="hover:text-gray-200">Thêm mới</a>
     </div>
 
@@ -18,7 +18,14 @@
 </nav>
 
 <div class="max-w-6xl mx-auto mt-10 px-4 text-center">
-  <h1 class="text-4xl font-bold mb-4">Chào mừng đến với WEB2081</h1>
-
+  <h1 class="text-4xl font-bold mb-4">Chào mừng đến với WEB2081 Angular</h1>
+  <h2 class="text-3xl font-bold">Ten toi la: {{ fullName }}</h2>
+  <p>Tuoi: {{ age }}</p>
+  <button
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    (click)="sayHello()"
+  >
+    Say hello
+  </button>
   <router-outlet></router-outlet>
 </div>
