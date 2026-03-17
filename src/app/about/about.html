@@ -1,3 +1,32 @@
-<p>Đây là trang giới thiệu</p>
-<p>Tên: {{ name }}</p>
-<p>Tuổi: {{ age }}</p>
+<h2>Thêm Product</h2>
+
+<form [formGroup]="productForm" (ngSubmit)="submitForm()">
+
+  <div>
+    <label>Tên sản phẩm</label>
+    <input type="text" formControlName="name">
+
+    @if(name?.invalid && name?.touched){
+      <p style="color:red">Tên sản phẩm bắt buộc</p>
+    }
+  </div>
+
+  <div>
+    <label>Giá</label>
+    <input type="number" formControlName="price">
+
+    @if(price?.invalid && price?.touched){
+      <p style="color:red">Giá phải > 0</p>
+    }
+  </div>
+
+  <div>
+    <label>Danh mục</label>
+    <input type="text" formControlName="category">
+  </div>
+
+  <button type="submit" [disabled]="productForm.invalid">
+    Thêm sản phẩm
+  </button>
+
+</form>
