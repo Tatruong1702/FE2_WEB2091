@@ -1,0 +1,26 @@
+<h2>Thêm sản phẩm</h2>
+
+<form [formGroup]="productForm" (ngSubmit)="submitForm()">
+
+  <input type="text" formControlName="name" placeholder="Tên sản phẩm" />
+  @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+    <p style="color:red">Tên không được để trống</p>
+  }
+
+  <input type="number" formControlName="price" placeholder="Giá" />
+  @if (productForm.get('price')?.invalid && productForm.get('price')?.touched) {
+    <p style="color:red">Giá phải > 0</p>
+  }
+
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Đang gửi...' : 'Thêm sản phẩm' }}
+  </button>
+
+</form>
+
+@if (success) {
+  <p style="color: green">{{ success }}</p>
+}
+@if (error) {
+  <p style="color: red">{{ error }}</p>
+}
