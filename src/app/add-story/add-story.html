@@ -1,25 +1,28 @@
-<h2>Thêm truyện</h2>
+<h2>Danh sách truyện</h2>
 
-<form [formGroup]="addForm" (ngSubmit)="submitForm()">
-
-  <input type="text" formControlName="title" placeholder="Tiêu đề" />
-  @if (addForm.get('title')?.invalid && addForm.get('title')?.touched) {
-    <p style="color:red">Title không được để trống</p>
-  }
-
-  <input type="text" formControlName="author" placeholder="Tác giả" />
-
-  <input type="number" formControlName="views" placeholder="Lượt xem" />
-
-  <button type="submit" [disabled]="loading">
-    {{ loading ? 'Đang gửi...' : 'Thêm truyện' }}
-  </button>
-
-</form>
-
-@if (success) {
-  <p style="color: green">{{ success }}</p>
+@if (stories.length === 0) {
+  <p>Không có truyện nào</p>
 }
-@if (error) {
-  <p style="color: red">{{ error }}</p>
+@if (stories.length > 0) {
+  <table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+      <th>ID</th>
+      <th>Tên truyện</th>
+      <!-- <th>Tác giả</th>
+      <th>Lượt xem</th> -->
+      <th>Hành động</th>
+    </tr>
+
+    @for (story of stories; track story.id) {
+      <tr>
+        <td>{{ story.id }}</td>
+        <td>{{ story.title }}</td>
+        <!-- <td>{{ story.author }}</td>
+        <td>{{ story.views }}</td> -->
+        <td>
+          <button (click)="deleteStory(story.id)">Xóa</button>
+        </td>
+      </tr>
+    }
+  </table>
 }

@@ -3,7 +3,6 @@ import { Home } from './home/home';
 import { AboutComponent } from './about/about';
 import { ContactComponent } from './contact/contact';
 import { PhoneComponent } from './about/phone/phone';
-import { RegisterComponent } from './register/register';
 
 export const routes: Routes = [
     {
@@ -23,9 +22,6 @@ export const routes: Routes = [
     {
         path: 'contact',
         component: ContactComponent,
-    },
-    {
-        path: 'register',
-        component: RegisterComponent,
     }
+
 ];

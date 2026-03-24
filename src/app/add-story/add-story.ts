@@ -1,48 +1,49 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+type Story = {
+  id: number;
+  title: string;
+  image: string;
+  author: string;
+  views: number;
+};
 @Component({
-  selector: 'app-add-story',
-  imports: [ReactiveFormsModule],
-  templateUrl: './add-story.html',
+  selector: 'app-stories',
+  imports: [],
+  templateUrl: './stories.html',
+  styleUrl: './stories.css',
 })
-export class AddStory {
-  addForm: FormGroup;
+export class Stories implements OnInit {
+  stories: Story[] = [];
 
-  loading = false;
-  error = '';
-  success = '';
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient
-  ) {
-    this.addForm = this.fb.group({
-      title: ['', Validators.required], // validate
-      author: [''],
-      views: [0],
+  ngOnInit() {
+    this.getStories();
+  }
+
+  getStories() {
+    this.http.get<Story[]>('http://localhost:3000/stories').subscribe({
+      next: (data) => {
+        this.stories = data;
+      },
+      error: () => {},
     });
   }
 
-  submitForm() {
-    if (this.addForm.invalid) return; // chặn submit
+  deleteStory(id: number) {
+    const confirmDelete = confirm('Bạn có chắc muốn xóa không?');
+    if (!confirmDelete) return;
 
-    this.loading = true;
-    this.error = '';
-    this.success = '';
-
-    this.http.post('http://localhost:3000/stories', this.addForm.value)
-      .subscribe({
-        next: () => {
-          this.loading = false;
-          this.success = 'Thêm truyện thành công';
-          this.addForm.reset();
-        },
-        error: () => {
-          this.loading = false;
-          this.error = 'Có lỗi xảy ra';
-        },
-      });
+    this.http.delete(`http://localhost:3000/stories/${id}`).subscribe({
+      next: () => {
+        this.stories = this.stories.filter((story) => story.id !== id);
+        alert('Xóa thành công');
+      },
+      error: () => {
+        alert('Xóa thất bại');
+      },
+    });
   }
 }
